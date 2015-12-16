@@ -32,17 +32,19 @@ function restore_options(){
         signatures: {}
     }, function(items){
         $('#myoptions').val(items.favoriteNumber);
-        //console.log(items.signatures);
-        $.each(items.signatures, function() {
-            var clone = add_row();
+        $.each(items.signatures, function(idx, val) {
+            if (idx == 0){
+                var row = $(".sub_row").first();
+            } else{
+                var row = add_row();
+            }
             $.each(this, function(k, v) {
                 if (k == "subreddit"){
-                    clone.find(".subreddit").val(v)
+                    row.find(".subreddit").val(v)
                 }
                 else if (k == "signature"){
-                    clone.find(".signature").val(v);
+                    row.find(".signature").val(v);
                 }
-                //console.log(k + ": " + v);
             });
         });
 
@@ -58,7 +60,8 @@ $("#save").click(function() {
 
 function add_row(){
     var clone = $(".sub_row").first().clone();
-    clone.find(".subreddit").val("/r/");
+    clone.find(".subreddit").val("");
+    clone.find(".signature").val("");
     clone.insertAfter($(".sub_row").last());
     clone.find(".subreddit").autocomplete({
         source: function( request, response ) {
