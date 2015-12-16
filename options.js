@@ -42,7 +42,7 @@ function restore_options(){
                 else if (k == "signature"){
                     clone.find(".signature").val(v);
                 }
-                console.log(k + ": " + v);
+                //console.log(k + ": " + v);
             });
         });
 
