@@ -2,6 +2,10 @@
 <html>
     <head>
         <title>Signature Bet Options</title>
+        <link rel="stylesheet" href="options.css">
+        <link rel="stylesheet" href="bootstrap.min.css">
+        <link rel="stylesheet" href="bootstrap-toggle.min.css">
+        <link rel="stylesheet" href="jquery-ui-1.11.4.custom/jquery-ui.min.css">
     </head>
     <body>
         Options:
@@ -15,20 +19,26 @@
 
             <br><br>
 
-            <label>
-                Subreddit:
-                <input type="text" size="40" class="subreddit" value="/r/">
-            </label>
+            <div class="ui-widget">
+                <label>
+                    Sub:
+                    <input type="text" size="40" class="subreddit" value="/r/">
+                </label>
+            </div>
+
+            <textarea class="signature"></textarea>
             <br><br><br><br>
         </div>
 
-        <div id="increment"><a href="#" id="plus">+</a>&nbsp;&nbsp;<a href="#" id="minus">-</a></div>
+        <div id="increment" style="font-size:24px"><a href="#" id="plus">+</a>&nbsp;&nbsp;<a href="#" id="minus">-</a></div>
         <br><br>
         <div id="status"></div>
         <button id="save">Save</button>
 
         <script src="jquery-2.1.4.min.js"></script>
         <script src="/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
+        <script src="bootstrap.min.js"></script>
+        <script src="bootstrap-toggle.min.js"></script>
         <script src="options.js"></script>
     </body>
 </html>
