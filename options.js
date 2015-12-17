@@ -62,6 +62,12 @@ function add_row(){
     clone.find(".signature").val("");
     clone.find(".s_tab a").attr("href", "#" + sig_idx + "_0");
     clone.find(".tab-pane").attr("id", sig_idx + "_0");
+    clone.find(".s_tab").each(function (i, obj) {
+        if (i > 0){
+            obj.remove();
+        }
+    });
+
     clone.insertAfter($(".sub_row").last());
     clone.find(".subreddit").autocomplete({
         source: function( request, response ) {
@@ -83,11 +89,25 @@ function add_row(){
 
 
 $(document).on('click', '.plus', function() {
+    sig_idx++;
+
     var row = $(this).parent().parent().closest('.sub_row');
     var clone = $(".sub_row").first().clone();
     clone.find(".subreddit").val("");
     clone.find(".signature").val("");
     clone.insertAfter(row);
+    clone.find(".s_tab").each(function (i, obj) {
+        if (i > 0){
+            obj.remove();
+        }
+    });
+    clone.find(".tab_pane").each(function (i, obj) {
+        if (i > 0){
+            obj.remove();
+        }
+    });
+    clone.find(".s_tab a").attr("href", "#" + sig_idx + "_0");
+    clone.find(".tab-pane").attr("id", sig_idx + "_0");
     clone.find(".subreddit").autocomplete({
         source: function( request, response ) {
             $.ajax({
@@ -133,10 +153,8 @@ $(document).on('click', '.nav-tabs a', function(e){
 
 
 function addTab(plus_tab){
-    console.log('add tab');
     var row_idx = plus_tab.siblings().first().find('a').attr('href');
     row_idx = row_idx.substr(1, row_idx.indexOf('_') - 1);
-    console.log(row_idx);
 
     var idx = plus_tab.siblings().length;
     var tab = $('.s_tab').first().clone();
