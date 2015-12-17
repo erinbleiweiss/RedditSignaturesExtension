@@ -11,14 +11,6 @@
         Options:
         <br><br><br><br>
         <div class="sub_row">
-            <select id="myoptions">
-                <option value="one">one</option>
-                <option value="two">two</option>
-                <option value="three">three</option>
-            </select>
-
-            <br><br>
-
             <div class="ui-widget">
                 <label>
                     Sub:
@@ -26,11 +18,29 @@
                 </label>
             </div>
 
-            <textarea class="signature"></textarea>
+            <ul class="nav nav-tabs">
+                <li class="s_tab active"><a data-toggle="tab" href="#0_0">One</a></li>
+                <li class="s_tab pull-right"><a class="addtab" href="#addtab">+</a></li>
+            </ul>
+            <br>
+
+            <div class="tab-content">
+                <div id="0_0" class="tab-pane fade in active">
+                    <textarea class="signature"></textarea>
+                </div>
+            </div>
+
+            <div class="options">
+                <label class="pick">
+                    Pick at Random
+                    <input type="checkbox" class="random">
+                </label>
+                <a href="#" class="clear">Clear</a>
+            </div>
+            <div class="increment" style="font-size:24px"><a href="#" class="plus">+</a>&nbsp;&nbsp;<a href="#" class="minus">-</a></div>
             <br><br><br><br>
         </div>
 
-        <div id="increment" style="font-size:24px"><a href="#" id="plus">+</a>&nbsp;&nbsp;<a href="#" id="minus">-</a></div>
         <br><br>
         <div id="status"></div>
         <button id="save">Save</button>

@@ -1,5 +1,6 @@
+var sig_idx = 0;
+
 function save_options(){
-    var number = $("#myoptions").val();
     var signatures = [];
     $('.sub_row').each(function() {
         var data = {};
@@ -11,7 +12,6 @@ function save_options(){
     });
 
     chrome.storage.sync.set({
-        favoriteNumber: number,
         signatures: signatures
     }, function(){
        // Update status to let user know options were saved.
@@ -26,17 +26,15 @@ function save_options(){
 // Restores options state using the preferences
 // stored in chrome.storage.
 function restore_options(){
-    // Use default number = 'one'
     chrome.storage.sync.get({
-        favoriteNumber: 'one',
         signatures: {}
     }, function(items){
-        $('#myoptions').val(items.favoriteNumber);
         $.each(items.signatures, function(idx, val) {
             if (idx == 0){
                 var row = $(".sub_row").first();
             } else{
                 var row = add_row();
+                sig_idx++;
             }
             $.each(this, function(k, v) {
                 if (k == "subreddit"){
@@ -82,15 +80,71 @@ function add_row(){
 }
 
 
-$("#plus").click(function() {
-    add_row();
+$(document).on('click', '.plus', function() {
+    var row = $(this).parent().parent().closest('.sub_row');
+    var clone = $(".sub_row").first().clone();
+    clone.find(".subreddit").val("");
+    clone.find(".signature").val("");
+    clone.insertAfter(row);
+    clone.find(".subreddit").autocomplete({
+        source: function( request, response ) {
+            $.ajax({
+                url: "http://api.reddit.com/subreddits/search.json?q=" + request.term,
+                success: function (data) {
+                    var results = [];
+                    $.each(data.data.children, function( i, item ) {
+                        results.push(item.data.display_name);
+                    });
+                    response(results);
+                }
+            });
+        },
+        minLength: 2
+    });
+
 });
 
-$("#minus").click(function() {
+$(document).on('click', '.minus', function() {
     if ($(".sub_row").length > 1){
-        $(".sub_row").last().remove();
+        var row = $(this).parent().parent().closest('.sub_row');
+        row.remove();
     }
 });
+
+$(document).on('change', '.random', function(){
+    if($(this).is(":checked")){
+        console.log('checked');
+    } else {
+        console.log('unchecked');
+    }
+
+});
+
+$(document).on('click', '.nav-tabs a', function(e){
+    if (!$(this).hasClass("addtab")){
+        $(this).tab('show');
+    } else{
+        var tab = $(this).parent();
+        addTab(tab);
+    }
+});
+
+
+function addTab(plus_tab){
+    console.log('add tab');
+    var idx = plus_tab.siblings().length;
+    var tab = $('.s_tab').first().clone();
+    tab.removeClass('active');
+    tab.find('a').attr('href', '#0_' + idx);
+    tab.insertBefore(plus_tab);
+
+    var new_textbox = $('.tab-pane').first().clone();
+    new_textbox.removeClass('active');
+    new_textbox.attr('id', '0_' + idx);
+    new_textbox.find('textarea').val('');
+    var prev_idx = idx-1;
+    new_textbox.insertAfter($("#0_" + prev_idx));
+}
 
 $(document).ready(function() {
     //console.log("*");
