@@ -33,8 +33,8 @@ function restore_options(){
             if (idx == 0){
                 var row = $(".sub_row").first();
             } else{
-                var row = add_row();
                 sig_idx++;
+                var row = add_row();
             }
             $.each(this, function(k, v) {
                 if (k == "subreddit"){
@@ -60,6 +60,8 @@ function add_row(){
     var clone = $(".sub_row").first().clone();
     clone.find(".subreddit").val("");
     clone.find(".signature").val("");
+    clone.find(".s_tab a").attr("href", "#" + sig_idx + "_0");
+    clone.find(".tab-pane").attr("id", sig_idx + "_0");
     clone.insertAfter($(".sub_row").last());
     clone.find(".subreddit").autocomplete({
         source: function( request, response ) {
@@ -132,18 +134,22 @@ $(document).on('click', '.nav-tabs a', function(e){
 
 function addTab(plus_tab){
     console.log('add tab');
+    var row_idx = plus_tab.siblings().first().find('a').attr('href');
+    row_idx = row_idx.substr(1, row_idx.indexOf('_') - 1);
+    console.log(row_idx);
+
     var idx = plus_tab.siblings().length;
     var tab = $('.s_tab').first().clone();
     tab.removeClass('active');
-    tab.find('a').attr('href', '#0_' + idx);
+    tab.find('a').attr('href', '#' + row_idx + '_' + idx);
     tab.insertBefore(plus_tab);
 
     var new_textbox = $('.tab-pane').first().clone();
     new_textbox.removeClass('active');
-    new_textbox.attr('id', '0_' + idx);
+    new_textbox.attr('id', row_idx + '_' + idx);
     new_textbox.find('textarea').val('');
     var prev_idx = idx-1;
-    new_textbox.insertAfter($("#0_" + prev_idx));
+    new_textbox.insertAfter($("#" + row_idx + "_" + prev_idx));
 }
 
 $(document).ready(function() {
