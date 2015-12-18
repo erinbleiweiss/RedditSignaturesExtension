@@ -13,4 +13,10 @@ body{
 
 .clear{
     float: right;
+    padding-left: 10px;
+}
+
+.remove{
+    float: right;
+    color: #D9534F;
 }

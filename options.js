@@ -5,9 +5,23 @@ function save_options(){
     $('.sub_row').each(function() {
         var data = {};
         var subreddit = $(this).find(".subreddit").val();
-        var signature = $(this).find(".signature").val();
         data['subreddit'] = subreddit;
-        data['signature'] = signature;
+        if ($(this).find(".random").is(':checked')){
+            data['random'] = true;
+
+            var signature_options = [];
+            $(this).find(".signature").each(function(i, obj){
+                var text = $(this).val();
+                console.log(text);
+                signature_options.push(text);
+            });
+            data['signature'] = signature_options;
+
+        } else {
+            data['random'] = false;
+            var signature = $(this).find(".signature").val();
+            data['signature'] = signature;
+        }
         signatures.push(data);
     });
 
@@ -29,6 +43,7 @@ function restore_options(){
     chrome.storage.sync.get({
         signatures: {}
     }, function(items){
+        var random = false;
         $.each(items.signatures, function(idx, val) {
             if (idx == 0){
                 var row = $(".sub_row").first();
@@ -40,10 +55,36 @@ function restore_options(){
                 if (k == "subreddit"){
                     row.find(".subreddit").val(v)
                 }
+                else if (k == "random"){
+                    if (v == true){
+                        random = true;
+                        row.find(".random").prop('checked', true);
+                        row.find(".nav").show();
+                        row.find(".remove").show();
+                    } else {
+                        random = false;
+                        row.find(".random").prop('checked', false);
+                        row.find(".nav").hide();
+                        row.find(".remove").hide();
+                    }
+                }
                 else if (k == "signature"){
-                    row.find(".signature").val(v);
+                    console.log(v);
+                    if (random){
+                        var plus_tab = row.find('.addtab').parent();
+                        for (var i=0; i< v.length-1; i++){
+                            addTab(plus_tab);
+                        }
+                        row.find('.tab-pane').each(function (i, obj){
+                           $(this).find('textarea').val(v[i]);
+                        });
+                    }
+                    else{
+                        row.find(".signature").val(v);
+                    }
                 }
             });
+
         });
 
     });
@@ -64,7 +105,12 @@ function add_row(){
     clone.find(".tab-pane").attr("id", sig_idx + "_0");
     clone.find(".s_tab").each(function (i, obj) {
         if (i > 0){
-            obj.remove();
+            $(this).remove();
+        }
+    });
+    clone.find(".tab-pane").each(function (i, obj) {
+        if (i > 0){
+            $(this).remove();
         }
     });
 
@@ -108,6 +154,8 @@ $(document).on('click', '.plus', function() {
     });
     clone.find(".s_tab a").attr("href", "#" + sig_idx + "_0");
     clone.find(".tab-pane").attr("id", sig_idx + "_0");
+    clone.find(".random").prop('checked', false);
+    clone.find(".nav").hide();
     clone.find(".subreddit").autocomplete({
         source: function( request, response ) {
             $.ajax({
@@ -134,10 +182,18 @@ $(document).on('click', '.minus', function() {
 });
 
 $(document).on('change', '.random', function(){
+    var row = $(this).parent().parent().parent();
+
     if($(this).is(":checked")){
-        console.log('checked');
+        row.find('.nav').show();
+        row.find('.remove').show();
     } else {
-        console.log('unchecked');
+        row.find('.nav').hide();
+        row.find('.remove').hide();
+        row.find('.s_tab.active').removeClass('active');
+        row.find('.s_tab a[href$="_0"]').parent().addClass('active');
+        row.find('.tab-pane.active').removeClass('active');
+        row.find('[id$="_0"]').addClass('in active');
     }
 
 });
@@ -160,6 +216,7 @@ function addTab(plus_tab){
     var tab = $('.s_tab').first().clone();
     tab.removeClass('active');
     tab.find('a').attr('href', '#' + row_idx + '_' + idx);
+    tab.find('a').text(idx + 1);
     tab.insertBefore(plus_tab);
 
     var new_textbox = $('.tab-pane').first().clone();
@@ -169,6 +226,53 @@ function addTab(plus_tab){
     var prev_idx = idx-1;
     new_textbox.insertAfter($("#" + row_idx + "_" + prev_idx));
 }
+
+
+$(document).on('click', '.clear', function(){
+    $(this).parent().parent().find('.tab-pane.fade.in.active').find('textarea').val('');
+});
+
+$(document).on('click', '.remove', function(){
+    var row = $(this).parent().parent();
+    var idx = row.find('.s_tab.active a').attr('href');
+    var row_idx = idx.substr(1, idx.indexOf('_') - 1);
+    idx = idx.substr(idx.indexOf('_') + 1, idx.length - 1);
+    if (idx > 0){
+        idx--;
+    } else {
+        idx = 1
+    }
+
+    if (row.find('.s_tab').length > 1) {
+        row.find('.s_tab.active').remove();
+        row.find('.tab-pane.fade.in.active').remove();
+
+        var tag = "#" + row_idx + "_" + idx;
+        row.find('.s_tab a[href="' + tag + '"]').parent().addClass('active');
+        row.find(tag).addClass('in active');
+        renumber(row, row_idx);
+    }
+
+});
+
+
+function renumber(row, row_idx){
+    var idx = 0;
+    row.find('.s_tab').each(function() {
+        tag = "#" + row_idx + "_" + idx;
+        $(this).find('a').attr('href', tag);
+        $(this).find('a').text(idx + 1);
+        idx++;
+    });
+
+    var idx = 0;
+    row.find('.tab-pane').each(function(){
+        tag = row_idx + "_" + idx;
+        $(this).attr('id', tag);
+        idx++;
+    });
+}
+
 
 $(document).ready(function() {
     //console.log("*");
