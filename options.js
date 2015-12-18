@@ -12,7 +12,6 @@ function save_options(){
             var signature_options = [];
             $(this).find(".signature").each(function(i, obj){
                 var text = $(this).val();
-                console.log(text);
                 signature_options.push(text);
             });
             data['signature'] = signature_options;
@@ -69,7 +68,6 @@ function restore_options(){
                     }
                 }
                 else if (k == "signature"){
-                    console.log(v);
                     if (random){
                         var plus_tab = row.find('.addtab').parent();
                         for (var i=0; i< v.length-1; i++){

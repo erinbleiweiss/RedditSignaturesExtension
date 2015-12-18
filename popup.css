@@ -3,3 +3,23 @@ body {
     width: 250px;
     height: 250px;
 }
+
+td{
+    padding: 10px !important;
+}
+
+.sub_toggle{
+    width: 250px;
+}
+
+.sub_toggle h5{
+    float: left;
+}
+
+.sub_toggle input, .toggle-group{
+    float: right;
+}
+
+.options{
+    float: right;
+}
