@@ -20,7 +20,7 @@
       "matches": [
         "*://*.reddit.com/*"
       ],
-      "js": ["jquery-2.1.4.min.js", "content.js"]
+      "js": ["/js/jquery-2.1.4.min.js", "/js/content.js"]
     }
   ],
 
