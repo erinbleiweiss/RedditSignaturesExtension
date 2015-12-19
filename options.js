@@ -47,9 +47,11 @@ function restore_options(){
         $.each(items.signatures, function(idx, val) {
             if (idx == 0){
                 var row = $(".sub_row").first();
+
             } else{
                 sig_idx++;
                 var row = add_row();
+                row.find('.signature').markdown({autofocus:false,savable:false,iconlibrary:'fa'});
             }
             $.each(this, function(k, v) {
                 if (k == "subreddit"){
@@ -85,7 +87,7 @@ function restore_options(){
             });
 
         });
-
+        $(".signature").first().markdown({autofocus:false,savable:false,iconlibrary:'fa'});
     });
 }
 
@@ -272,10 +274,6 @@ function renumber(row, row_idx){
     });
 }
 
-
-$(document).ready(function() {
-    //console.log("*");
-});
 
 $(".subreddit").each(function() {
     $(this).autocomplete({
