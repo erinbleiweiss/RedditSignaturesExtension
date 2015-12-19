@@ -296,7 +296,7 @@ $(".subreddit").each(function() {
 
 });
 
-$('.signature').bind('input propertychange', function() {
+$(document).on('input propertychange', '.signature', function (e) {
     var preview = $(this).parent().parent().parent().find('.preview');
     var html = SnuOwnd.getParser().render($(this).val());
     preview.html(html);

@@ -1262,7 +1262,7 @@
               name: 'cmdDisapproval',
               title: 'Disapproval',
               hotkey: 'Ctrl+D',
-              icon: { glyph: 'ಠ_ಠ', fa: 'ಠ_ಠ', 'fa-3': 'ಠ_ಠ', text: 'ಠ_ಠ' },
+              icon: { glyph: '', fa: '', 'fa-3': '' },
               callback: function(e){
                   // Give/remove ** surround the selection
                   var chunk, cursor, selected = e.getSelection(), content = e.getContent();
