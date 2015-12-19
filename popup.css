@@ -1,15 +1,23 @@
 body {
-    padding: 0 20px;
-    width: 250px;
+    width: 300px;
     height: 250px;
 }
 
+#wrapper{
+    padding: 0 10px 0 20px;
+}
+
 td{
-    padding: 10px !important;
+    padding-bottom: 10px !important;
+}
+
+#all_subs{
+    max-height: 200px;
+    overflow-y: scroll;
 }
 
 .sub_toggle{
-    width: 250px;
+    width: 240px;
 }
 
 .sub_toggle h5{

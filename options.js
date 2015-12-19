@@ -5,6 +5,7 @@ function save_options(){
     $('.sub_row').each(function() {
         var data = {};
         var subreddit = $(this).find(".subreddit").val();
+        data['active'] = true;
         data['subreddit'] = subreddit;
         if ($(this).find(".random").is(':checked')){
             data['random'] = true;
@@ -295,6 +296,8 @@ $(".subreddit").each(function() {
 
 });
 
-
-
-
+$('.signature').bind('input propertychange', function() {
+    var preview = $(this).parent().parent().parent().find('.preview');
+    var html = SnuOwnd.getParser().render($(this).val());
+    preview.html(html);
+});
