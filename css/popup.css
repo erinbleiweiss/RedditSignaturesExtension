@@ -3,6 +3,10 @@ body {
     height: 250px;
 }
 
+h3{
+    padding-bottom: 20px;
+}
+
 #wrapper{
     padding: 0 10px 0 20px;
 }
@@ -28,6 +32,16 @@ td{
     float: right;
 }
 
-.options{
+.left{
+    max-width: 185px;
+    overflow-x: hidden;
+}
+
+.right{
+    text-align: right;
+}
+
+#options{
+    margin: 10px 0;
     float: right;
 }
