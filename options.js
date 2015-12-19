@@ -45,14 +45,9 @@ function restore_options(){
     }, function(items){
         var random = false;
         $.each(items.signatures, function(idx, val) {
-            if (idx == 0){
-                var row = $(".sub_row").first();
-
-            } else{
-                sig_idx++;
-                var row = add_row();
-                row.find('.signature').markdown({autofocus:false,savable:false,iconlibrary:'fa'});
-            }
+            sig_idx++;
+            var row = add_row();
+            row.find('.signature').markdown({autofocus:false,savable:false,iconlibrary:'fa'});
             $.each(this, function(k, v) {
                 if (k == "subreddit"){
                     row.find(".subreddit").val(v)
@@ -87,11 +82,12 @@ function restore_options(){
             });
 
         });
-        $(".signature").first().markdown({autofocus:false,savable:false,iconlibrary:'fa'});
+        //$(".signature").first().markdown({autofocus:false,savable:false,iconlibrary:'fa'});
     });
 }
 
 $(document).ready(function() {
+    $('.sub_row').first().hide();
     restore_options();
 });
 $("#save").click(function() {
@@ -100,6 +96,7 @@ $("#save").click(function() {
 
 function add_row(){
     var clone = $(".sub_row").first().clone();
+    clone.show();
     clone.find(".subreddit").val("");
     clone.find(".signature").val("");
     clone.find(".s_tab a").attr("href", "#" + sig_idx + "_0");
@@ -137,9 +134,10 @@ function add_row(){
 
 $(document).on('click', '.plus', function() {
     sig_idx++;
-
     var row = $(this).parent().parent().closest('.sub_row');
     var clone = $(".sub_row").first().clone();
+    clone.show();
+    clone.find(".signature").markdown({autofocus:false,savable:false,iconlibrary:'fa'});
     clone.find(".subreddit").val("");
     clone.find(".signature").val("");
     clone.insertAfter(row);
@@ -176,7 +174,7 @@ $(document).on('click', '.plus', function() {
 });
 
 $(document).on('click', '.minus', function() {
-    if ($(".sub_row").length > 1){
+    if ($(".sub_row").length > 2){
         var row = $(this).parent().parent().closest('.sub_row');
         row.remove();
     }
@@ -221,6 +219,7 @@ function addTab(plus_tab){
     tab.insertBefore(plus_tab);
 
     var new_textbox = $('.tab-pane').first().clone();
+    new_textbox.find('.signature').markdown({autofocus:false,savable:false,iconlibrary:'fa'});
     new_textbox.removeClass('active');
     new_textbox.attr('id', row_idx + '_' + idx);
     new_textbox.find('textarea').val('');

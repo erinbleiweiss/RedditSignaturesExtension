@@ -410,8 +410,7 @@
         // Set editor attributes, data short-hand API and listener
         this.$editor.attr('id',(new Date()).getTime());
 
-        $(document).find(editor).on('click', '[data-provider="bootstrap-markdown"]', $.proxy(this.__handle, this));
-        //this.$editor.on('click', '[data-provider="bootstrap-markdown"]', $.proxy(this.__handle, this));
+        this.$editor.on('click', '[data-provider="bootstrap-markdown"]', $.proxy(this.__handle, this));
 
         if (this.$element.is(':disabled') || this.$element.is('[readonly]')) {
           this.$editor.addClass('md-editor-disabled');
