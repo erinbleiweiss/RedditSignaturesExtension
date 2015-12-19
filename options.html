@@ -12,14 +12,12 @@
 `
     </head>
     <body>
-        <h2>Reddit Signature Options</h2>
+        <h2>Reddit Signatures</h2>
         <br>
         <div class="sub_row">
-            <div class="ui-widget">
-                <label>
-                    Subreddit:
-                    <input type="text" size="40" class="subreddit">
-                </label>
+            <div class="ui-widget input-group">
+                    <span class="input-group-addon" id="basic-addon1">/r/</span>
+                    <input type="text" size="40" class="subreddit form-control" aria-describedby="basic-addon1">
             </div>
 
             <ul class="nav nav-tabs">
@@ -45,15 +43,9 @@
                 </label>
                 <a href="#" class="clear">Clear</a><a href="#" class="remove">Remove</a>
             </div>
-            <div class="increment" style="font-size:24px">
-                <table>
-                    <tr>
-                        <td><a href="#" class="plus">+</a></td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" class="minus">-</a></td>
-                    </tr>
-                </table>
+            <div class="increment btn-group-vertical btn-group-sm" style="font-size:24px">
+                    <button type="button" class="btn btn-primary plus fa fa-plus"></button>
+                    <button type="button" class="btn btn-primary minus fa fa-minus"></button>
             </div>
             <br><br><br><br>
         </div>
