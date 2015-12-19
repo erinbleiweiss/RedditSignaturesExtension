@@ -90,6 +90,7 @@ $(document).ready(function() {
     $('.sub_row').first().hide();
     restore_options();
 });
+
 $("#save").click(function() {
    save_options();
 });
