@@ -11,6 +11,7 @@ chrome.storage.sync.get({
     signatures = items.signatures;
     $.each(items.signatures, function(idx, obj) {
         if (idx == 0){
+            //$(document).find('.toggle_row').first().hide();
             $(document).find('.toggle_row').first().find('h5').text("/r/" + this.subreddit);
             if (this.active){
                 $(document).find('.toggle_row').first().find('#toggle_' + idx).prop('checked', true);
@@ -20,6 +21,7 @@ chrome.storage.sync.get({
         } else{
             var last = $(document).find('.toggle_row').last();
             var clone = last.clone();
+            clone.show();
             clone.insertAfter(last);
             clone.find('input').attr('id', 'toggle_' + idx);
             clone.find('h5').text("/r/" + this.subreddit);

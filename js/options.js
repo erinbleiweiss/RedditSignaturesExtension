@@ -2,27 +2,29 @@ var sig_idx = 0;
 
 function save_options(){
     var signatures = [];
-    $('.sub_row').each(function() {
-        var data = {};
-        var subreddit = $(this).find(".subreddit").val();
-        data['active'] = true;
-        data['subreddit'] = subreddit;
-        if ($(this).find(".random").is(':checked')){
-            data['random'] = true;
+    $('.sub_row').each(function(i, obj) {
+        if (i > 0) {
+            var data = {};
+            var subreddit = $(this).find(".subreddit").val();
+            data['active'] = true;
+            data['subreddit'] = subreddit;
+            if ($(this).find(".random").is(':checked')) {
+                data['random'] = true;
 
-            var signature_options = [];
-            $(this).find(".signature").each(function(i, obj){
-                var text = $(this).val();
-                signature_options.push(text);
-            });
-            data['signature'] = signature_options;
+                var signature_options = [];
+                $(this).find(".signature").each(function (i, obj) {
+                    var text = $(this).val();
+                    signature_options.push(text);
+                });
+                data['signature'] = signature_options;
 
-        } else {
-            data['random'] = false;
-            var signature = $(this).find(".signature").val();
-            data['signature'] = signature;
+            } else {
+                data['random'] = false;
+                var signature = $(this).find(".signature").val();
+                data['signature'] = signature;
+            }
+            signatures.push(data);
         }
-        signatures.push(data);
     });
 
     chrome.storage.sync.set({
