@@ -166,6 +166,7 @@ $(document).on('click', '.plus', function() {
     clone.find(".signature").markdown({autofocus:false,savable:false,iconlibrary:'fa'});
     clone.find(".subreddit").val("");
     clone.find(".signature").val("");
+    clone.find('.toggle-elm').bootstrapToggle('on');
     clone.insertAfter(row);
     clone.find(".s_tab").each(function (i, obj) {
         if (i > 0){
