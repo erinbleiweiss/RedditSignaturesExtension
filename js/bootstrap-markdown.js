@@ -198,6 +198,12 @@
         this.$textarea.focus();
       }
 
+      var parent = $(document).find(e.currentTarget).parents(':eq(3)');
+      var signature = parent.find('.signature').val();
+      var preview = parent.find('.preview');
+      var html = SnuOwnd.getParser().render(signature);
+      preview.html(html);
+
       e.preventDefault();
     }
 
@@ -409,7 +415,6 @@
 
         // Set editor attributes, data short-hand API and listener
         this.$editor.attr('id',(new Date()).getTime());
-
         this.$editor.on('click', '[data-provider="bootstrap-markdown"]', $.proxy(this.__handle, this));
 
         if (this.$element.is(':disabled') || this.$element.is('[readonly]')) {
@@ -1262,25 +1267,32 @@
           data: [{
               name: 'cmdDisapproval',
               title: 'Disapproval',
-              hotkey: 'Ctrl+D',
-              icon: { glyph: '', fa: '', 'fa-3': '' },
+              hotkey: 'Ctrl+',
+              icon: { glyph: 'glyphicon glyphicon-link', fa: 'fa fa-link', 'fa-3': 'icon-link' },
               callback: function(e){
-                  // Give/remove ** surround the selection
-                  var chunk, cursor, selected = e.getSelection(), content = e.getContent();
+                  // Give [] surround the selection and prepend the link
+                  var chunk, cursor, selected = e.getSelection(), content = e.getContent(), link;
 
                   if (selected.length === 0) {
                       // Give extra word
-                      chunk = e.__localize('strong text');
+                      chunk = e.__localize('enter link description here');
                   } else {
                       chunk = selected.text;
                   }
 
-                  // transform selection and set the cursor into chunked text
-                  e.replaceSelection('&#3232;_&#3232;');
-                  cursor = selected.start+15;
+                  link = prompt(e.__localize('Insert Hyperlink'),'http://');
 
-                  // Set the cursor
-                  e.setSelection(cursor,cursor+chunk.length);
+                  var urlRegex = new RegExp('^((http|https)://|(mailto:)|(//))[a-z0-9]', 'i');
+                  if (link !== null && link !== '' && link !== 'http://' && urlRegex.test(link)) {
+                      var sanitizedLink = $('<div>'+link+'</div>').text();
+
+                      // transform selection and set the cursor into chunked text
+                      e.replaceSelection('['+chunk+']('+sanitizedLink+')');
+                      cursor = selected.start+1;
+
+                      // Set the cursor
+                      e.setSelection(cursor,cursor+chunk.length);
+                  }
               }
           }]
       }]

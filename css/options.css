@@ -32,6 +32,11 @@ h2{
     color: #D9534F;
 }
 
+.nav{
+    position: relative;
+    top: 21px;
+}
+
 .signature{
 }
 
