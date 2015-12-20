@@ -23,6 +23,13 @@ function save_options(){
                 var signature = $(this).find(".signature").val();
                 data['signature'] = signature;
             }
+
+            if ($(this).find('.toggle').hasClass('off')){
+                data['active'] = false;
+            } else {
+                data['active'] = true;
+            }
+
             signatures.push(data);
         }
     });
@@ -87,6 +94,13 @@ function restore_options(){
                         preview.html(html);
                     }
                 }
+                else if (k == "active"){
+                    if (v == true){
+                        row.find('.toggle-elm').bootstrapToggle('on')
+                    } else {
+                        row.find('.toggle-elm').bootstrapToggle('off')
+                    }
+                }
             });
 
         });
@@ -111,7 +125,7 @@ function add_row(){
     clone.find(".s_tab a").attr("href", "#" + sig_idx + "_0");
     clone.find(".tab-pane").attr("id", sig_idx + "_0");
     clone.find(".toggle-elm").attr("id", "toggle_" + sig_idx);
-    clone.find("#toggle_" + sig_idx).bootstrapToggle();
+    clone.find("#toggle_" + sig_idx).bootstrapToggle('on');
     clone.find(".s_tab").each(function (i, obj) {
         if (i > 0){
             $(this).remove();
