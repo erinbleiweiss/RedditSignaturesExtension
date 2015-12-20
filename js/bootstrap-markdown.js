@@ -198,6 +198,7 @@
         this.$textarea.focus();
       }
 
+      // Render changes in markdown preview with SnuOwnd (Snudown js)
       var parent = $(document).find(e.currentTarget).parents(':eq(3)');
       var signature = parent.find('.signature').val();
       var preview = parent.find('.preview');
@@ -1267,32 +1268,25 @@
           data: [{
               name: 'cmdDisapproval',
               title: 'Disapproval',
-              hotkey: 'Ctrl+',
-              icon: { glyph: 'glyphicon glyphicon-link', fa: 'fa fa-link', 'fa-3': 'icon-link' },
+              hotkey: 'Ctrl+D',
+              icon: { glyph: '', fa: '', 'fa-3': '' },
               callback: function(e){
-                  // Give [] surround the selection and prepend the link
-                  var chunk, cursor, selected = e.getSelection(), content = e.getContent(), link;
+                  // Give/remove ** surround the selection
+                  var chunk, cursor, selected = e.getSelection(), content = e.getContent();
 
                   if (selected.length === 0) {
                       // Give extra word
-                      chunk = e.__localize('enter link description here');
+                      chunk = e.__localize('strong text');
                   } else {
                       chunk = selected.text;
                   }
 
-                  link = prompt(e.__localize('Insert Hyperlink'),'http://');
+                  // transform selection and set the cursor into chunked text
+                  e.replaceSelection('&#3232;_&#3232;');
+                  cursor = selected.start+15;
 
-                  var urlRegex = new RegExp('^((http|https)://|(mailto:)|(//))[a-z0-9]', 'i');
-                  if (link !== null && link !== '' && link !== 'http://' && urlRegex.test(link)) {
-                      var sanitizedLink = $('<div>'+link+'</div>').text();
-
-                      // transform selection and set the cursor into chunked text
-                      e.replaceSelection('['+chunk+']('+sanitizedLink+')');
-                      cursor = selected.start+1;
-
-                      // Set the cursor
-                      e.setSelection(cursor,cursor+chunk.length);
-                  }
+                  // Set the cursor
+                  e.setSelection(cursor,cursor+chunk.length);
               }
           }]
       }]
