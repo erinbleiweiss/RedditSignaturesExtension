@@ -52,11 +52,12 @@ h2{
 
 .preview{
     width: 500px;
-    height: 100px;
+    min-height: 65px;
     border: 1px solid #ddd;
     border-top: 0;
     padding: 5px;
     background: #FAFAFA;
+    clear: both;
 }
 
 button[title="Disapproval"] span::before{
