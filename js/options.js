@@ -1,5 +1,6 @@
 var sig_idx = 0;
 
+// Save data to chrome.storage
 function save_options(){
     var signatures = [];
     $('.sub_row').each(function(i, obj) {
@@ -46,8 +47,8 @@ function save_options(){
     });
 }
 
-// Restores options state using the preferences
-// stored in chrome.storage.
+// Restores options state on page load
+// using the preferences stored in chrome.storage.
 function restore_options(){
     chrome.storage.sync.get({
         signatures: {}
@@ -117,6 +118,8 @@ $("#save").click(function() {
    save_options();
 });
 
+
+// Add new signature (used on page load)
 function add_row(){
     var clone = $(".sub_row").first().clone();
     clone.show();
@@ -158,9 +161,10 @@ function add_row(){
 }
 
 
+// Add new signature (used when plus button is clicked)
 $(document).on('click', '.plus', function() {
     sig_idx++;
-    var row = $(this).parent().parent().closest('.sub_row');
+    var row = $(this).parents(':eq(1)').closest('.sub_row');
     var clone = $(".sub_row").first().clone();
     clone.show();
     clone.find(".signature").markdown({autofocus:false,savable:false,iconlibrary:'fa'});
@@ -200,15 +204,17 @@ $(document).on('click', '.plus', function() {
 
 });
 
+// Remove signature (when minus button is clicked)
 $(document).on('click', '.minus', function() {
     if ($(".sub_row").length > 2){
-        var row = $(this).parent().parent().closest('.sub_row');
+        var row = $(this).parents(':eq(1)').closest('.sub_row');
         row.remove();
     }
 });
 
+// Show/hide tabs when "Pick at random" is toggled
 $(document).on('change', '.random', function(){
-    var row = $(this).parent().parent().parent();
+    var row = $(this).parents(':eq(2)');
 
     if($(this).is(":checked")){
         row.find('.nav').show();
@@ -224,6 +230,7 @@ $(document).on('change', '.random', function(){
 
 });
 
+// Display corresponding divs when tab is changed
 $(document).on('click', '.nav-tabs a', function(e){
     if (!$(this).hasClass("addtab")){
         $(this).tab('show');
@@ -241,6 +248,7 @@ $(document).on('click', '.nav-tabs a', function(e){
 });
 
 
+// Add a new tab when tab "plus" button is clicked
 function addTab(plus_tab){
     var row_idx = plus_tab.siblings().first().find('a').attr('href');
     row_idx = row_idx.substr(1, row_idx.indexOf('_') - 1);
@@ -262,6 +270,7 @@ function addTab(plus_tab){
 }
 
 
+// Clear current signature and update preview
 $(document).on('click', '.clear', function(){
     $(this).parents(':eq(2)').find('.tab-pane.fade.in.active').find('textarea').val('');
     var preview = $(this).parents(':eq(2)').find('.preview');
@@ -270,6 +279,7 @@ $(document).on('click', '.clear', function(){
 
 });
 
+// Remove current tab
 $(document).on('click', '.remove', function(){
     var row = $(this).parents(':eq(1)');
     var idx = row.find('.s_tab.active a').attr('href');
@@ -293,7 +303,7 @@ $(document).on('click', '.remove', function(){
 
 });
 
-
+// Renumber tabs when tab is removed
 function renumber(row, row_idx){
     var idx = 0;
     row.find('.s_tab').each(function() {
@@ -311,7 +321,7 @@ function renumber(row, row_idx){
     });
 }
 
-
+// Add autocomplete subreddit search for each input
 $(".subreddit").each(function() {
     $(this).autocomplete({
         source: function( request, response ) {
@@ -331,6 +341,7 @@ $(".subreddit").each(function() {
 
 });
 
+// Update preview for every keystroke
 $(document).on('input propertychange', '.signature', function (e) {
     var preview = $(this).parents(':eq(2)').find('.preview');
     var html = SnuOwnd.getParser().render($(this).val());
@@ -338,6 +349,7 @@ $(document).on('input propertychange', '.signature', function (e) {
 });
 
 
+// Enable/disable row when toggled on/off
 $(document).on('change', '.toggle-elm', function() {
 
     var row = $(this).parents(':eq(2)');
