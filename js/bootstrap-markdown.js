@@ -1015,14 +1015,14 @@
               }
 
               // transform selection and set the cursor into chunked text
-              if (content.substr(selected.start-1,1) === '~~'
-                  && content.substr(selected.end,1) === '~~' ) {
-                  e.setSelection(selected.start-1,selected.end+1);
+              if (content.substr(selected.start-2,2) === '~~'
+                  && content.substr(selected.end,2) === '~~' ) {
+                  e.setSelection(selected.start-2,selected.end+2);
                   e.replaceSelection(chunk);
-                  cursor = selected.start-1;
+                  cursor = selected.start-2;
               } else {
                   e.replaceSelection('~~'+chunk+'~~');
-                  cursor = selected.start+1;
+                  cursor = selected.start+2;
               }
 
               // Set the cursor
