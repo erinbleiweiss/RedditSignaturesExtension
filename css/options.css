@@ -62,8 +62,13 @@ button[title="Disapproval"] span::before{
     position: relative;
     top: -285px;
     left: 530px;
+    margin-bottom: -100px;
 }
 
 .ui-autocomplete-loading {
     background:url('/img/indicator.gif') no-repeat right center !important;
+}
+
+hr{
+    padding-bottom: 50px;
 }

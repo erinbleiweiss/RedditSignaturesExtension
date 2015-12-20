@@ -52,7 +52,10 @@ function restore_options(){
             row.find('.signature').markdown({autofocus:false,savable:false,iconlibrary:'fa'});
             $.each(this, function(k, v) {
                 if (k == "subreddit"){
-                    row.find(".subreddit").val(v)
+                    row.find(".subreddit").val(v);
+                    var preview = row.find(".preview");
+                    var html = SnuOwnd.getParser().render(row.find(".signature").val());
+                    preview.html(html);
                 }
                 else if (k == "random"){
                     if (v == true){
@@ -79,6 +82,9 @@ function restore_options(){
                     }
                     else{
                         row.find(".signature").val(v);
+                        var preview = row.find(".preview");
+                        var html = SnuOwnd.getParser().render(row.find(".signature").val());
+                        preview.html(html);
                     }
                 }
             });
@@ -203,6 +209,13 @@ $(document).on('change', '.random', function(){
 $(document).on('click', '.nav-tabs a', function(e){
     if (!$(this).hasClass("addtab")){
         $(this).tab('show');
+        e.preventDefault();
+
+        var id = $(this).attr('href');
+        var preview = $(id).find(".preview");
+        var html = SnuOwnd.getParser().render($(id).find(".signature").val());
+        preview.html(html);
+
     } else{
         var tab = $(this).parent();
         addTab(tab);
