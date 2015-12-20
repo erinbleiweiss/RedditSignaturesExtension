@@ -110,11 +110,14 @@ function add_row(){
     clone.find(".signature").val("");
     clone.find(".s_tab a").attr("href", "#" + sig_idx + "_0");
     clone.find(".tab-pane").attr("id", sig_idx + "_0");
+    clone.find(".toggle-elm").attr("id", "toggle_" + sig_idx);
+    clone.find("#toggle_" + sig_idx).bootstrapToggle();
     clone.find(".s_tab").each(function (i, obj) {
         if (i > 0){
             $(this).remove();
         }
     });
+
     clone.find(".tab-pane").each(function (i, obj) {
         if (i > 0){
             $(this).remove();
