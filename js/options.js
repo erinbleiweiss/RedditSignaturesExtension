@@ -263,11 +263,15 @@ function addTab(plus_tab){
 
 
 $(document).on('click', '.clear', function(){
-    $(this).parent().parent().find('.tab-pane.fade.in.active').find('textarea').val('');
+    $(this).parents(':eq(2)').find('.tab-pane.fade.in.active').find('textarea').val('');
+    var preview = $(this).parents(':eq(2)').find('.preview');
+    var html = SnuOwnd.getParser().render($(this).val());
+    preview.html(html);
+
 });
 
 $(document).on('click', '.remove', function(){
-    var row = $(this).parent().parent();
+    var row = $(this).parents(':eq(1)');
     var idx = row.find('.s_tab.active a').attr('href');
     var row_idx = idx.substr(1, idx.indexOf('_') - 1);
     idx = idx.substr(idx.indexOf('_') + 1, idx.length - 1);
@@ -328,7 +332,7 @@ $(".subreddit").each(function() {
 });
 
 $(document).on('input propertychange', '.signature', function (e) {
-    var preview = $(this).parent().parent().parent().find('.preview');
+    var preview = $(this).parents(':eq(2)').find('.preview');
     var html = SnuOwnd.getParser().render($(this).val());
     preview.html(html);
 });
