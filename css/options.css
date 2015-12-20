@@ -125,3 +125,17 @@ hr{
     opacity: 0.6;
     pointer-events: none;
 }
+
+.no_sigs{
+    height: 200px;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.no_sigs .increment{
+    position: relative;
+    top: 6px !important;
+    left: 105px !important;
+    margin-bottom: 0 !important;
+}
+

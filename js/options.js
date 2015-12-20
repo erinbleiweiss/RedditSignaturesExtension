@@ -106,6 +106,11 @@ function restore_options(){
 
         });
         //$(".signature").first().markdown({autofocus:false,savable:false,iconlibrary:'fa'});
+
+        if ($('.sub_row').length > 1){
+            $('.no_sigs').hide();
+        }
+
     });
 }
 
@@ -164,7 +169,14 @@ function add_row(){
 // Add new signature (used when plus button is clicked)
 $(document).on('click', '.plus', function() {
     sig_idx++;
-    var row = $(this).parents(':eq(1)').closest('.sub_row');
+
+    if ($(this).parents(':eq(1)').attr('class') == "no_sigs"){
+        var row = $(this).parents(':eq(2)').find('.sub_row').first();
+        $(this).parents(':eq(1)').hide();
+    } else {
+        var row = $(this).parents(':eq(1)').closest('.sub_row');
+    }
+
     var clone = $(".sub_row").first().clone();
     clone.show();
     clone.find(".signature").markdown({autofocus:false,savable:false,iconlibrary:'fa'});
@@ -206,10 +218,17 @@ $(document).on('click', '.plus', function() {
 
 // Remove signature (when minus button is clicked)
 $(document).on('click', '.minus', function() {
-    if ($(".sub_row").length > 2){
-        var row = $(this).parents(':eq(1)').closest('.sub_row');
-        row.remove();
+
+    if ($(this).parents(':eq(1)').attr('class') != "no_sigs"){
+        if ($(".sub_row").length > 1) {
+            var row = $(this).parents(':eq(1)').closest('.sub_row');
+            row.remove();
+        }
     }
+    if ($('.sub_row').length == 1){
+        $('.no_sigs').show();
+    }
+
 });
 
 // Show/hide tabs when "Pick at random" is toggled
