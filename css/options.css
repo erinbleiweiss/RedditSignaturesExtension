@@ -112,3 +112,16 @@ hr{
     top: -60px;
     left: 350px;
 }
+
+.toggle-group{
+    position: relative;
+    pointer-events: all !important;
+    opacity: 1.0 !important;
+    z-index: 7;
+}
+
+.disabled {
+    z-index: 5;
+    opacity: 0.6;
+    pointer-events: none;
+}

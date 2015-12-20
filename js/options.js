@@ -332,3 +332,23 @@ $(document).on('input propertychange', '.signature', function (e) {
     preview.html(html);
 });
 
+
+$(document).on('change', '.toggle-elm', function() {
+
+    var row = $(this).parents(':eq(2)');
+    if (row.find('.toggle').hasClass('off')){
+        row.find('.subreddit').addClass('disabled');
+        row.find('.input-group-addon').addClass('disabled');
+        row.find('.nav').addClass('disabled');
+        row.find('.tab-content').addClass('disabled');
+        row.find('.options').addClass('disabled');
+    } else{
+        row.find('.subreddit').removeClass('disabled');
+        row.find('.input-group-addon').removeClass('disabled');
+        row.find('.nav').removeClass('disabled');
+        row.find('.tab-content').removeClass('disabled');
+        row.find('.options').removeClass('disabled');
+    }
+
+});
+
