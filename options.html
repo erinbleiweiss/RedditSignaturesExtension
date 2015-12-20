@@ -12,13 +12,19 @@
 
     </head>
     <body>
-        <h2>Reddit Signatures</h2>
+        <div id="header">
+            <h2>Reddit Signatures</h2>
+            <div id="save_wrapper">
+                <button type="button" id="save" class="btn btn-primary btn-lg">Save</button>
+                <div id="status"></div>
+            </div>
+        </div>
+        <div id="spacer">&nbsp;</div>
         <br>
         <div class="sub_row">
             <div class="ui-widget input-group">
                 <span class="input-group-addon" id="basic-addon1">/r/</span>
                 <input type="text" size="40" class="subreddit form-control" aria-describedby="basic-addon1">
-                <!--<span class="input-group-addon"></span>-->
             </div>
 
             <ul class="nav nav-tabs">
@@ -52,8 +58,6 @@
         </div>
 
         <br><br>
-        <div id="status"></div>
-        <button id="save">Save</button>
 
         <script src="/js/jquery-2.1.4.min.js"></script>
         <script src="/js/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>

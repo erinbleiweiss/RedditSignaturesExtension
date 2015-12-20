@@ -314,3 +314,4 @@ $(document).on('input propertychange', '.signature', function (e) {
     var html = SnuOwnd.getParser().render($(this).val());
     preview.html(html);
 });
+
