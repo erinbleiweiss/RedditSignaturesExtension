@@ -4,7 +4,7 @@
   "name": "Reddit Signatures",
   "short_name": "Custom signatures for reddit posts",
   "description": "Automatically appends custom text to your posts in a given subreddit",
-  "version": "1.0",
+  "version": "1.1",
 
   "browser_action": {
     "default_icon": "icon.png",
