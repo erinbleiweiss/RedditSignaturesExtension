@@ -18,6 +18,7 @@ td{
 #all_subs{
     max-height: 200px;
     overflow-y: scroll;
+    margin-bottom: 42px;
 }
 
 .sub_toggle{
@@ -42,6 +43,11 @@ td{
 }
 
 #options{
-    margin: 10px 0;
-    float: right;
+    position: absolute;
+    bottom: 0;
+    text-align: right;
+    margin-left: -20px;
+    padding: 10px;
+    width: 100%;
+    background: #eee;
 }

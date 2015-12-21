@@ -9,28 +9,27 @@ chrome.storage.sync.get({
     signatures: {}
 }, function(items){
     signatures = items.signatures;
+    if (signatures.length == 0){
+        $('.no_sigs2').show();
+        $('table').hide();
+    }
     $.each(items.signatures, function(idx, obj) {
+        $('.no_sigs2').hide();
+        $('table').show();
+        var last = $(document).find('.toggle_row').last();
+        var clone = last.clone();
         if (idx == 0){
-            //$(document).find('.toggle_row').first().hide();
-            $(document).find('.toggle_row').first().find('h5').text("/r/" + this.subreddit);
-            if (this.active){
-                $(document).find('.toggle_row').first().find('#toggle_' + idx).prop('checked', true);
-            } else {
-                $(document).find('.toggle_row').first().find('#toggle_' + idx).prop('checked', false);
-            }
-        } else{
-            var last = $(document).find('.toggle_row').last();
-            var clone = last.clone();
-            clone.show();
-            clone.insertAfter(last);
-            clone.find('input').attr('id', 'toggle_' + idx);
-            clone.find('h5').text("/r/" + this.subreddit);
-            if (this.active){
-                console.log('active');
-                clone.find('#toggle_' + idx).prop('checked', true);
-            } else {
-                clone.find('#toggle_' + idx).prop('checked', false);
-            }
+            last.hide();
+        }
+        clone.show();
+        clone.insertAfter(last);
+        clone.find('input').attr('id', 'toggle_' + idx);
+        clone.find('h5').text("/r/" + this.subreddit);
+        if (this.active){
+            console.log('active');
+            clone.find('#toggle_' + idx).prop('checked', true);
+        } else {
+            clone.find('#toggle_' + idx).prop('checked', false);
         }
     });
 });
