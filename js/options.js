@@ -3,10 +3,20 @@ var sig_idx = 0;
 // Save data to chrome.storage
 function save_options(){
     var signatures = [];
+    var hasError = false;
     $('.sub_row').each(function(i, obj) {
         if (i > 0) {
             var data = {};
             var subreddit = $(this).find(".subreddit").val();
+            if (subreddit == ""){
+                $(this).find('.input-group').addClass('has-error');
+                $(this).find('.subreddit[data-toggle="tooltip"]').tooltip('show');
+                hasError = true;
+            } else{
+                $(this).find('.input-group').removeClass('has-error');
+                $(this).find('.subreddit[data-toggle="tooltip"]').tooltip('destroy');
+            }
+
             data['active'] = true;
             data['subreddit'] = subreddit;
             if ($(this).find(".random").is(':checked')) {
@@ -35,16 +45,18 @@ function save_options(){
         }
     });
 
-    chrome.storage.sync.set({
-        signatures: signatures
-    }, function(){
-       // Update status to let user know options were saved.
-        var status = $("#status");
-        status.text('Options saved.');
-        setTimeout(function(){
-            status.text('');
-        }, 2000);
-    });
+    if (!hasError) {
+        chrome.storage.sync.set({
+            signatures: signatures
+        }, function () {
+            // Update status to let user know options were saved.
+            var status = $("#status");
+            status.text('Options saved.');
+            setTimeout(function () {
+                status.text('');
+            }, 2000);
+        });
+    }
 }
 
 // Restores options state on page load

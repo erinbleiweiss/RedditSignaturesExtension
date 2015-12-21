@@ -15,6 +15,10 @@ h2{
 
 .subreddit{
     width: 350px !important;
+    height: 40px !important;
+}
+.input-group-addon{
+    height: 20px !important;
 }
 
 .toggle.btn{
