@@ -73,6 +73,12 @@ button[title="Disapproval"] span::before{
     content: 'ಠ_ಠ';
 }
 
+button[title="Horizontal Rule"] span::before {
+    content: '____';
+    position: relative;
+    top: -5px;
+}
+
 .increment{
     position: relative;
     top: -285px;

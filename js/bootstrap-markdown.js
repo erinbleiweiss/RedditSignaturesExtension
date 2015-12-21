@@ -1263,7 +1263,35 @@
             e.setSelection(cursor,cursor+chunk.length);
           }
         }]
-      },{
+      },
+      {
+          name: 'groupHR',
+          data: [{
+              name: 'cmdHR',
+              title: 'Horizontal Rule',
+              hotkey: 'Ctrl+D',
+              icon: { glyph: 'glyphicon glyphicon-minus', fa: 'fa fa-minus', 'fa-3': 'icon-minus' },
+              callback: function(e){
+                  // Give/remove ** surround the selection
+                  var chunk, cursor, selected = e.getSelection(), content = e.getContent();
+
+                  if (selected.length === 0) {
+                      // Give extra word
+                      chunk = e.__localize('strong text');
+                  } else {
+                      chunk = selected.text;
+                  }
+
+                  // transform selection and set the cursor into chunked text
+                  e.replaceSelection('\n*****\n');
+                  cursor = selected.start+8;
+
+                  // Set the cursor
+                  e.setSelection(cursor,cursor+chunk.length);
+              }
+          }]
+      },
+      {
           name: 'groupDisapproval',
           data: [{
               name: 'cmdDisapproval',
@@ -1289,7 +1317,8 @@
                   e.setSelection(cursor,cursor+chunk.length);
               }
           }]
-      }]
+      }
+      ]
     ],
     additionalButtons:[], // Place to hook more buttons by code
     reorderButtonGroups:[],
