@@ -2,7 +2,9 @@ chrome.storage.sync.get({
         signatures: {}
     }, function(items){
         $.each(items.signatures, function() {
-            if (window.location.href.indexOf("/r/" + this.subreddit + "/comments") > -1) {
+            var subreddit = this.subreddit.toLowerCase();
+            var url = window.location.href.toLowerCase();
+            if (url.indexOf("/r/" + subreddit + "/comments") > -1) {
                 if (this.active){
                     var textbox = $(".md textarea");
                     if (this.random){
