@@ -149,6 +149,10 @@ hr{
     margin-bottom: 0 !important;
 }
 
+.options{
+    padding: 5px 0;
+}
+
 .pick{
     font-size: 1.05em;
 }
